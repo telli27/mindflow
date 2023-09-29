@@ -9,7 +9,6 @@ import '../../widgets/categoriesIcon.dart';
 
 class CategoriesPage extends StatefulWidget {
   const CategoriesPage({super.key});
-
   @override
   State<CategoriesPage> createState() => _CategoriesPageState();
 }

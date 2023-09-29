@@ -1,128 +1,48 @@
 {
   "project_info": {
-    "project_number": "551439676652",
-    "project_id": "bilgiseruveni-6c971",
-    "storage_bucket": "bilgiseruveni-6c971.appspot.com"
+    "project_number": "406227651406",
+    "project_id": "mindflow-67c0c",
+    "storage_bucket": "mindflow-67c0c.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:551439676652:android:613308eb01027ecb5b61c9",
-        "android_client_info": {
-          "package_name": "com.bilgiseruveni.bilim"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "551439676652-7ntlo0235bv5v3ole8ok86i7e0g5699d.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.bilgiseruveni.bilim",
-            "certificate_hash": "b3dd305826da457dafa4d740a168a4d2c99d6f64"
-          }
-        },
-        {
-          "client_id": "551439676652-jhse6gfhksdr2t2rr58rj3a7arlj5nmi.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.bilgiseruveni.bilim",
-            "certificate_hash": "1cc9bb058be9a8f7afbf89b6fed91a14c48b32ba"
-          }
-        },
-        {
-          "client_id": "551439676652-250qcjq6ej3uq529vag3nk8v4simmi3m.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBwDX1Wf8LWZSrAfd42lshevScgyLe_f2g"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "551439676652-250qcjq6ej3uq529vag3nk8v4simmi3m.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "551439676652-o6hjje4m1vvjg74nnogjbdae4r46eue3.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.example.mindflow"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:551439676652:android:9d7f88fb86197bfc5b61c9",
-        "android_client_info": {
-          "package_name": "com.example.bilgiseruveni"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "551439676652-250qcjq6ej3uq529vag3nk8v4simmi3m.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBwDX1Wf8LWZSrAfd42lshevScgyLe_f2g"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "551439676652-250qcjq6ej3uq529vag3nk8v4simmi3m.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "551439676652-o6hjje4m1vvjg74nnogjbdae4r46eue3.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.example.mindflow"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:551439676652:android:bc56ab7ec1a0561d5b61c9",
+        "mobilesdk_app_id": "1:406227651406:android:76db11ccc9ff7364866c1f",
         "android_client_info": {
           "package_name": "com.mindflow.world"
         }
       },
       "oauth_client": [
         {
-          "client_id": "551439676652-250qcjq6ej3uq529vag3nk8v4simmi3m.apps.googleusercontent.com",
+          "client_id": "406227651406-89i1potitugu0130vu3e4eje6lgu127o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mindflow.world",
+            "certificate_hash": "b3dd305826da457dafa4d740a168a4d2c99d6f64"
+          }
+        },
+        {
+          "client_id": "406227651406-1alpi271m6dupqqhjqh9h8ruh3i3846u.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBwDX1Wf8LWZSrAfd42lshevScgyLe_f2g"
+          "current_key": "AIzaSyDyoYdeennpyLvFDPG_bp2wCl_SxDSIReU"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "551439676652-250qcjq6ej3uq529vag3nk8v4simmi3m.apps.googleusercontent.com",
+              "client_id": "406227651406-1alpi271m6dupqqhjqh9h8ruh3i3846u.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "551439676652-o6hjje4m1vvjg74nnogjbdae4r46eue3.apps.googleusercontent.com",
+              "client_id": "406227651406-99lqpmoo48tbqkckl47kqctm7qdl0chf.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.mindflow"
+                "bundle_id": "com.mindflow.world"
               }
             }
           ]

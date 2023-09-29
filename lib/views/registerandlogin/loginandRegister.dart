@@ -55,11 +55,11 @@ class _LoginAndRegisterState extends State<LoginAndRegister>
   @override
   Widget build(BuildContext context) {
     //_authServices.signOut();
-    final color = Colors.white;
+    final color = Colors.black;
     _scale = 1 - _controller.value;
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle(
-        systemNavigationBarColor: Colors.white,
+        systemNavigationBarColor: Colors.black,
         statusBarIconBrightness: Brightness.light,
         systemNavigationBarIconBrightness: Brightness.light,
       ),
@@ -68,7 +68,7 @@ class _LoginAndRegisterState extends State<LoginAndRegister>
           return null!;
         },
         child: Scaffold(
-            backgroundColor: AppConfig.appColor, // Color(0xFF8185E2),
+            backgroundColor: Color.fromRGBO(127, 127, 137, 1),
             body: Center(
               child: Column(
                 children: <Widget>[
@@ -88,7 +88,7 @@ class _LoginAndRegisterState extends State<LoginAndRegister>
                         child: CircleAvatar(
                           backgroundColor: Colors.grey[100],
                           backgroundImage: AssetImage(
-                            "assets/resim2.jpg",
+                            "assets/resim1.jpg",
                           ),
                           radius: 75.0,
                         )),
@@ -100,7 +100,7 @@ class _LoginAndRegisterState extends State<LoginAndRegister>
                     child: Text(
                       "Merhaba",
                       style: GoogleFonts.signika(
-                          color: Colors.white,
+                          color: Colors.black,
                           fontSize: 18,
                           fontWeight: FontWeight.w500),
                     ),
@@ -110,7 +110,7 @@ class _LoginAndRegisterState extends State<LoginAndRegister>
                     child: Text(
                       "MindFlow'a ",
                       style: GoogleFonts.courgette(
-                          color: Colors.white,
+                          color: Colors.black,
                           fontSize: 28,
                           fontWeight: FontWeight.w600),
                       //greatVibes,courgette
@@ -121,7 +121,7 @@ class _LoginAndRegisterState extends State<LoginAndRegister>
                     child: Text(
                       "Hoşgeldiniz",
                       style: GoogleFonts.signika(
-                          color: Colors.white,
+                          color: Colors.black,
                           fontSize: 18,
                           fontWeight: FontWeight.w500),
                     ),
@@ -134,7 +134,7 @@ class _LoginAndRegisterState extends State<LoginAndRegister>
                     child: Text(
                       "İstediğiniz Konuda",
                       style: GoogleFonts.signika(
-                          color: Colors.white,
+                          color: Colors.black,
                           fontSize: 18,
                           fontWeight: FontWeight.w500),
                     ),
@@ -144,7 +144,7 @@ class _LoginAndRegisterState extends State<LoginAndRegister>
                     child: Text(
                       "Makale Paylaşabilirsiniz",
                       style: GoogleFonts.signika(
-                          color: Colors.white,
+                          color: Colors.black,
                           fontSize: 18,
                           fontWeight: FontWeight.w500),
                     ),
@@ -219,7 +219,7 @@ class _LoginAndRegisterState extends State<LoginAndRegister>
         width: 270,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(100.0),
-          color: Colors.white,
+          color: Colors.black,
         ),
         child: Center(
           child: Text(
@@ -245,7 +245,7 @@ class _LoginAndRegisterState extends State<LoginAndRegister>
             style: TextStyle(
                 fontSize: 20.0,
                 fontWeight: FontWeight.bold,
-                color: Colors.white //Color(0xFF8185E2),
+                color: Colors.black //Color(0xFF8185E2),
                 ),
           ),
         ),
