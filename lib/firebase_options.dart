@@ -55,7 +55,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBwDX1Wf8LWZSrAfd42lshevScgyLe_f2g',
-    appId: '1:551439676652:android:9d7f88fb86197bfc5b61c9',
+    appId: '1:551439676652:android:bc56ab7ec1a0561d5b61c9',
     messagingSenderId: '551439676652',
     projectId: 'bilgiseruveni-6c971',
     storageBucket: 'bilgiseruveni-6c971.appspot.com',
@@ -63,23 +63,23 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyCajUBWBWAMEcMXvE-9QUHYGcopAEq5lBM',
-    appId: '1:551439676652:ios:2762b664ef35edf85b61c9',
+    appId: '1:551439676652:ios:ef31539f13c450835b61c9',
     messagingSenderId: '551439676652',
     projectId: 'bilgiseruveni-6c971',
     storageBucket: 'bilgiseruveni-6c971.appspot.com',
-    androidClientId: '551439676652-c45mdkr2h4k1emfi7ienellh6dqu8dsd.apps.googleusercontent.com',
-    iosClientId: '551439676652-obah6lr2kg3oio38kq4mdds84v7ob1ip.apps.googleusercontent.com',
-    iosBundleId: 'com.example.bilgiseruveni',
+    androidClientId: '551439676652-7ntlo0235bv5v3ole8ok86i7e0g5699d.apps.googleusercontent.com',
+    iosClientId: '551439676652-o6hjje4m1vvjg74nnogjbdae4r46eue3.apps.googleusercontent.com',
+    iosBundleId: 'com.example.mindflow',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyCajUBWBWAMEcMXvE-9QUHYGcopAEq5lBM',
-    appId: '1:551439676652:ios:2762b664ef35edf85b61c9',
+    appId: '1:551439676652:ios:ef31539f13c450835b61c9',
     messagingSenderId: '551439676652',
     projectId: 'bilgiseruveni-6c971',
     storageBucket: 'bilgiseruveni-6c971.appspot.com',
-    androidClientId: '551439676652-c45mdkr2h4k1emfi7ienellh6dqu8dsd.apps.googleusercontent.com',
-    iosClientId: '551439676652-obah6lr2kg3oio38kq4mdds84v7ob1ip.apps.googleusercontent.com',
-    iosBundleId: 'com.example.bilgiseruveni',
+    androidClientId: '551439676652-7ntlo0235bv5v3ole8ok86i7e0g5699d.apps.googleusercontent.com',
+    iosClientId: '551439676652-o6hjje4m1vvjg74nnogjbdae4r46eue3.apps.googleusercontent.com',
+    iosBundleId: 'com.example.mindflow',
   );
 }

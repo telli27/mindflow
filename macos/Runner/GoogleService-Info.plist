@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>551439676652-o6hjje4m1vvjg74nnogjbdae4r46eue3.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.551439676652-o6hjje4m1vvjg74nnogjbdae4r46eue3</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>551439676652-7ntlo0235bv5v3ole8ok86i7e0g5699d.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCajUBWBWAMEcMXvE-9QUHYGcopAEq5lBM</string>
+	<key>GCM_SENDER_ID</key>
+	<string>551439676652</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.mindflow</string>
+	<key>PROJECT_ID</key>
+	<string>bilgiseruveni-6c971</string>
+	<key>STORAGE_BUCKET</key>
+	<string>bilgiseruveni-6c971.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:551439676652:ios:ef31539f13c450835b61c9</string>
+</dict>
+</plist>
