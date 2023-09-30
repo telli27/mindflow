@@ -156,7 +156,11 @@ class _HomeState extends State<Home> {
                   .snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator();
+                  return Center(child: Container(
+                    width: 150,
+                    height: 150,
+                    
+                    child: CircularProgressIndicator()));
                 } else if (snapshot.hasError) {
                   return Text('Hata: ${snapshot.error}');
                 } else {
