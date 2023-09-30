@@ -93,7 +93,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            showIcon(index: index),
+                            showIcon(index: category["id"]),
                             SizedBox(
                               height: 10,
                             ),

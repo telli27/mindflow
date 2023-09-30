@@ -28,19 +28,19 @@ Widget showIcon({required int index}) {
     );
   } else if (index == 4) {
     return FaIcon(
-      FontAwesomeIcons.mobile,
+      FontAwesomeIcons.code,
       color: color,
       size: 30,
     );
   } else if (index == 5) {
     return FaIcon(
-      FontAwesomeIcons.television,
+      FontAwesomeIcons.shuttleSpace,
       color: color,
       size: 30,
     );
   } else if (index == 6) {
     return FaIcon(
-      FontAwesomeIcons.code,
+      FontAwesomeIcons.palette,
       color: color,
       size: 30,
     );

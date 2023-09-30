@@ -1,11 +1,16 @@
-import 'package:mindflow/provider/authCtx.dart';
-import 'package:mindflow/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
+import 'package:mindflow/provider/authCtx.dart';
+import 'package:mindflow/services/auth.dart';
+
 class PrivacyPolicyPage extends StatefulWidget {
-  PrivacyPolicyPage({super.key});
+  bool profile;
+  PrivacyPolicyPage({
+    Key? key,
+    required this.profile,
+  }) : super(key: key);
 
   @override
   State<PrivacyPolicyPage> createState() => _PrivacyPolicyPageState();
@@ -113,7 +118,7 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
                   height: 10,
                 ),
                 Text(
-                  " MindFlow'da paylaştığınız makalelerin telif hakları tamamen sizin sorumluluğunuzdadır. Uygulamada paylaşılan makalelerin içeriği veya telif hakları konusunda 'MindFlow' herhangi bir sorumluluk kabul etmez.\nİlgili telif hakkı ihlali veya yasal sorumluluklar Makaleleri paylaşan Kullanıcılara aittir.",
+                  " MindFlow'da paylaştığınız makalelerin veya görsellerin telif hakları tamamen paylaşan kullanıcının yani sizin sorumluluğunuzdadır. Uygulamada paylaşılan makalelerin içeriği,görselleri veya telif hakları konusunda 'MindFlow' herhangi bir sorumluluk kabul etmez.\nİlgili telif hakkı ihlali veya yasal sorumluluklar Makaleleri paylaşan Kullanıcıya aittir.",
                   style: GoogleFonts.signika(
                       color: Colors.black,
                       fontSize: 16,
@@ -193,7 +198,7 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
 
 Lütfen MindFlow'ı kullanmadan önce bu Gizlilik Sözleşmesi'ni dikkatlice okuyun. Eğer bu sözleşmeyi kabul etmiyorsanız, MindFlow'ı kullanmamalısınız.
 
-Herhangi bir soru veya endişeniz varsa, lütfen İletişim MindFlowInfo@gmail.com adresinden bize ulaşın.""",
+Herhangi bir soru veya endişeniz varsa, lütfen İletişim mindflowinformation@gmail.com adresinden bize ulaşın.""",
                   style: GoogleFonts.signika(
                       color: Colors.black,
                       fontSize: 16,
@@ -202,13 +207,14 @@ Herhangi bir soru veya endişeniz varsa, lütfen İletişim MindFlowInfo@gmail.c
                 SizedBox(
                   height: 30,
                 ),
-                Align(
+             widget.profile==true?Container():   Align(
                   alignment: Alignment.bottomCenter,
                   child: InkWell(
                     onTap: () {
                       setState(() {});
-                      
-                      authServices.signInWithGoogle(context: context, isPrivacyPolicyAccepted:true);
+
+                      authServices.signInWithGoogle(
+                          context: context, isPrivacyPolicyAccepted: true);
                     },
                     child: Container(
                       width: 300,

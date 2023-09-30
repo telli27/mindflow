@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mindflow/Cards/Card1.dart';
 import 'package:mindflow/Cards/Card2.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -54,7 +55,10 @@ class _TabBodyPageState extends State<TabBodyPage> {
         ),
         viewType: ViewType.list,
         onEmpty: Center(
-          child: Text("${widget.title} ile ilgili bir paylaşım bulunamadı"),
+          child: Text("${widget.title} ile ilgili bir paylaşım bulunamadı",
+            style: GoogleFonts.signika(
+                color: Colors.black, fontSize: 15, fontWeight: FontWeight.w500),
+          ),
         ),
         bottomLoader: const Center(
           child: CircularProgressIndicator(

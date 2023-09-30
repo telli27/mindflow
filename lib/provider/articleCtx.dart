@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -138,7 +139,13 @@ class ArticleCtx extends ChangeNotifier {
       } else {
         final pickedFile = await _pickerImage.pickImage(source: source);
 
-        articleImage = pickedFile!;
+        File compressedFile = await FlutterNativeImage.compressImage(
+          pickedFile!.path,
+          quality: 5,
+        );
+       
+          articleImage = XFile(compressedFile.path);
+      
         if (articleImage != null) {}
         notifyListeners();
         print('aaa');
@@ -164,7 +171,9 @@ class ArticleCtx extends ChangeNotifier {
       selectedIndex = 0;
       Navigator.push(context, MaterialPageRoute(
         builder: (context) {
-          return ArticleStart(index: 0,);
+          return ArticleStart(
+            index: 0,
+          );
         },
       ));
     } catch (e) {

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:hive/hive.dart';
+import 'package:mindflow/privacyPolicy.dart';
 import 'package:provider/provider.dart';
 
 import '../../model/usermodel.dart';
@@ -208,7 +209,7 @@ class _SettingPageState extends State<SettingPage> {
               height: 0,
             ),
             Container(
-              height: 280,
+              height: 350,
               margin: EdgeInsets.all(10),
               padding: EdgeInsets.all(10),
               decoration: BoxDecoration(
@@ -326,6 +327,68 @@ class _SettingPageState extends State<SettingPage> {
                           ],
                         ),
                       ),
+                    ),    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Divider(
+                        thickness: 1,
+                        color: HexColor("#ECF0F8"),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 15),
+                      child: InkWell(
+                        onTap: () {
+                        
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: ((context) {
+                            return PrivacyPolicyPage(profile: true,);
+                          })));
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(top: 8.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  FaIcon(
+                                    FontAwesomeIcons.exclamation,
+                                    color: Colors.black,
+                                    size: 25,
+                                  ),
+                                  SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.1,
+                                  ),
+                                  Text(
+                                    "MindFlow Gizlilik Sözleşmesi",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w800,
+                                      color: Colors.black,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                      width: 1, color: HexColor("#ABB4C7"))),
+                              child: Center(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: FaIcon(FontAwesomeIcons.arrowRight,
+                                      size: 16, color: Colors.black),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -389,7 +452,8 @@ class _SettingPageState extends State<SettingPage> {
                           ],
                         ),
                       ),
-                    )
+                    ),
+
                   ],
                 ),
               ),

@@ -18,7 +18,7 @@ Widget CustomPreviewPadding(context, name, value) => Row(
       children: [
         Container(
           height: 55,
-          width: MediaQuery.of(context).size.width * 0.28,
+          width: MediaQuery.of(context).size.width * 0.22,
           child: Align(
             alignment: Alignment.centerLeft,
             child: Text(
@@ -33,7 +33,7 @@ Widget CustomPreviewPadding(context, name, value) => Row(
           ),
         ),
         Container(
-          width: MediaQuery.of(context).size.width * 0.66,
+          width: MediaQuery.of(context).size.width * 0.72,
           height: 49,
           decoration: BoxDecoration(
               color: Colors.white,
@@ -53,7 +53,7 @@ Widget CustomTextAreaPreviewMySkillsPadding(context, name, value) => Row(
       children: [
         Container(
           height: 49,
-    width: MediaQuery.of(context).size.width * 0.28,
+    width: MediaQuery.of(context).size.width * 0.22,
           child: Align(
             alignment: Alignment.centerLeft,
             child: Text(
@@ -68,7 +68,7 @@ Widget CustomTextAreaPreviewMySkillsPadding(context, name, value) => Row(
           ),
         ),
         Container(
-           width: MediaQuery.of(context).size.width * 0.66,
+           width: MediaQuery.of(context).size.width * 0.72,
           height: 80,
           decoration: BoxDecoration(
               color: Colors.white,

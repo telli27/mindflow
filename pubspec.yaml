@@ -72,6 +72,7 @@ dependencies:
   google_sign_in: ^6.1.5
   sign_button: ^2.0.6
   google_fonts: ^4.0.4
+  appflowy_editor: ^0.1.9
   
 
 dev_dependencies:

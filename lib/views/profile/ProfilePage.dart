@@ -59,7 +59,7 @@ class _ProfilePageState extends State<ProfilePage> {
               padding: const EdgeInsets.only(left: 10.0, top: 5, bottom: 5),
               child: CircleAvatar(
                 maxRadius: 20,
-                backgroundColor: Colors.black,
+                backgroundColor: Color.fromARGB(255, 155, 153, 153),
                 child: FaIcon(
                   FontAwesomeIcons.chevronLeft,
                   color: Colors.white,

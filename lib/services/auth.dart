@@ -75,7 +75,6 @@ class AuthServices {
         final userDoc = await _firestore.collection("User").doc(user.uid).get();
 
         if (userDoc.exists) {
-        
           log("kullanıcı kayıt yapmış**");
           print("kullanıcı kayıt yapmış**");
           // Kullanıcı daha önce kaydedilmiş, sadece articleStart sayfasına yönlendir
@@ -92,12 +91,14 @@ class AuthServices {
           EasyLoading.dismiss();
           log("kullanıcı kayıt yapmamış**");
           print("kullanıcı kayıt yapmamış**");
-         
+
           // Kullanıcı daha önce kaydedilmemiş, yeni bir kayıt oluştur.
           if (isPrivacyPolicyAccepted == false) {
             Navigator.push(context, MaterialPageRoute(
               builder: (context) {
-                return PrivacyPolicyPage();
+                return PrivacyPolicyPage(
+                  profile: false,
+                );
               },
             ));
           } else {

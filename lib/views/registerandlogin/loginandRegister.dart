@@ -59,7 +59,7 @@ class _LoginAndRegisterState extends State<LoginAndRegister>
     _scale = 1 - _controller.value;
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle(
-        systemNavigationBarColor: Colors.black,
+        systemNavigationBarColor: Colors.white,
         statusBarIconBrightness: Brightness.light,
         systemNavigationBarIconBrightness: Brightness.light,
       ),
@@ -68,146 +68,150 @@ class _LoginAndRegisterState extends State<LoginAndRegister>
           return null!;
         },
         child: Scaffold(
-            backgroundColor: Color.fromRGBO(127, 127, 137, 1),
-            body: Center(
-              child: Column(
-                children: <Widget>[
-                  SizedBox(
-                    height: 70,
-                  ),
-                  AvatarGlow(
-                    endRadius: 90,
-                    duration: Duration(seconds: 2),
-                    glowColor: Colors.white24,
-                    repeat: true,
-                    repeatPauseDuration: Duration(seconds: 2),
-                    startDelay: Duration(seconds: 1),
-                    child: Material(
-                        elevation: 8.0,
-                        shape: CircleBorder(),
-                        child: CircleAvatar(
-                          backgroundColor: Colors.grey[100],
-                          backgroundImage: AssetImage(
-                            "assets/resim1.jpg",
+            backgroundColor: Color.fromRGBO(203, 203, 223, 1),
+            body: SafeArea(
+              child: Center(
+                child: Column(
+                  children: <Widget>[
+                    SizedBox(
+                      height: 70,
+                    ),
+                    AvatarGlow(
+                      endRadius: 90,
+                      duration: Duration(seconds: 2),
+                      glowColor: Colors.white24,
+                      repeat: true,
+                      repeatPauseDuration: Duration(seconds: 2),
+                      startDelay: Duration(seconds: 1),
+                      child: Material(
+                          elevation: 8.0,
+                          shape: CircleBorder(),
+                          child: Container(
+                            width: 130,
+                            height: 130,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: AssetImage("assets/Mindflow.png"))),
+                          )),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    DelayedAnimation(
+                      child: Text(
+                        "Merhaba",
+                        style: GoogleFonts.signika(
+                            color: Colors.black,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500),
+                      ),
+                      delay: delayedAmount + 1000,
+                    ),
+                    DelayedAnimation(
+                      child: Text(
+                        "MindFlow'a ",
+                        style: GoogleFonts.courgette(
+                            color: Colors.black,
+                            fontSize: 28,
+                            fontWeight: FontWeight.w600),
+                        //greatVibes,courgette
+                      ),
+                      delay: delayedAmount + 2000,
+                    ),
+                    DelayedAnimation(
+                      child: Text(
+                        "Hoşgeldiniz",
+                        style: GoogleFonts.signika(
+                            color: Colors.black,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500),
+                      ),
+                      delay: delayedAmount + 2000,
+                    ),
+                    SizedBox(
+                      height: 30.0,
+                    ),
+                    DelayedAnimation(
+                      child: Text(
+                        "İstediğiniz Konuda",
+                        style: GoogleFonts.signika(
+                            color: Colors.black,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500),
+                      ),
+                      delay: delayedAmount + 3000,
+                    ),
+                    DelayedAnimation(
+                      child: Text(
+                        "Makale Paylaşabilirsiniz",
+                        style: GoogleFonts.signika(
+                            color: Colors.black,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500),
+                      ),
+                      delay: delayedAmount + 3000,
+                    ),
+                    SizedBox(
+                      height: 100.0,
+                    ),
+                    SizedBox(
+                      height: 0,
+                    ),
+                    SignInButton(
+                      buttonType: ButtonType.google,
+                      btnText: "Google ile giriş yap",
+                      buttonSize: ButtonSize.large,
+                      onPressed: () async {
+                        AuthServices authServices = AuthServices();
+                        await authServices.signInWithGoogle(
+                            context: context, isPrivacyPolicyAccepted: false);
+                        ;
+                      },
+                    )
+                    /* DelayedAnimation(
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.push(context, MaterialPageRoute(
+                                builder: (context) {
+                                  return Register();
+                                },
+                              ));
+                            },
+                            child: _animatedButtonUIRegister,
                           ),
-                          radius: 75.0,
-                        )),
-                  ),
-                  SizedBox(
-                    height: 0,
-                  ),
-                  DelayedAnimation(
-                    child: Text(
-                      "Merhaba",
-                      style: GoogleFonts.signika(
-                          color: Colors.black,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w500),
-                    ),
-                    delay: delayedAmount + 1000,
-                  ),
-                  DelayedAnimation(
-                    child: Text(
-                      "MindFlow'a ",
-                      style: GoogleFonts.courgette(
-                          color: Colors.black,
-                          fontSize: 28,
-                          fontWeight: FontWeight.w600),
-                      //greatVibes,courgette
-                    ),
-                    delay: delayedAmount + 2000,
-                  ),
-                  DelayedAnimation(
-                    child: Text(
-                      "Hoşgeldiniz",
-                      style: GoogleFonts.signika(
-                          color: Colors.black,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w500),
-                    ),
-                    delay: delayedAmount + 2000,
-                  ),
-                  SizedBox(
-                    height: 30.0,
-                  ),
-                  DelayedAnimation(
-                    child: Text(
-                      "İstediğiniz Konuda",
-                      style: GoogleFonts.signika(
-                          color: Colors.black,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w500),
-                    ),
-                    delay: delayedAmount + 3000,
-                  ),
-                  DelayedAnimation(
-                    child: Text(
-                      "Makale Paylaşabilirsiniz",
-                      style: GoogleFonts.signika(
-                          color: Colors.black,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w500),
-                    ),
-                    delay: delayedAmount + 3000,
-                  ),
-                  SizedBox(
-                    height: 100.0,
-                  ),
-                  SizedBox(
-                    height: 0,
-                  ),
-                  SignInButton(
-                    buttonType: ButtonType.google,
-                    btnText: "Google ile giriş yap",
-                    buttonSize: ButtonSize.large,
-                    onPressed: () async {
-                      AuthServices authServices = AuthServices();
-                      await authServices.signInWithGoogle(
-                          context: context, isPrivacyPolicyAccepted: false);
-                      ;
-                    },
-                  )
-                  /* DelayedAnimation(
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.push(context, MaterialPageRoute(
-                              builder: (context) {
-                                return Register();
-                              },
-                            ));
-                          },
-                          child: _animatedButtonUIRegister,
+                          delay: delayedAmount + 4000,
                         ),
-                        delay: delayedAmount + 4000,
-                      ),
-                      SizedBox(
-                        height: 30.0,
-                      ),
-                      DelayedAnimation(
-                        child: Text(
-                          "Hesabın var mı ?",
-                          style: TextStyle(
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.bold,
-                              color: color),
+                        SizedBox(
+                          height: 30.0,
                         ),
-                        delay: delayedAmount + 5000,
-                      ),
-                      SizedBox(
-                        height: 30.0,
-                      ),
-                 DelayedAnimation(
-                        child: GestureDetector(
-                          onTapDown: _onTapDown,
-                          onTapUp: _onTapUp,
-                          child: Transform.scale(
-                            scale: _scale,
-                            child: _animatedButtonUI,
+                        DelayedAnimation(
+                          child: Text(
+                            "Hesabın var mı ?",
+                            style: TextStyle(
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.bold,
+                                color: color),
                           ),
+                          delay: delayedAmount + 5000,
                         ),
-                        delay: delayedAmount + 4000,
-                      ),*/
-                ],
+                        SizedBox(
+                          height: 30.0,
+                        ),
+                   DelayedAnimation(
+                          child: GestureDetector(
+                            onTapDown: _onTapDown,
+                            onTapUp: _onTapUp,
+                            child: Transform.scale(
+                              scale: _scale,
+                              child: _animatedButtonUI,
+                            ),
+                          ),
+                          delay: delayedAmount + 4000,
+                        ),*/
+                  ],
+                ),
               ),
             )),
       ),
