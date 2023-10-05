@@ -143,8 +143,14 @@ class AuthServices {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              TextField(
-                                controller: _userName,
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: TextFormField(
+                                  controller: _userName,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder()
+                                  ),
+                                ),
                               ),
                               SizedBox(
                                 height: 8,
