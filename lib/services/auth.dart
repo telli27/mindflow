@@ -1,5 +1,7 @@
 import 'dart:developer';
+import 'dart:io';
 
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mindflow/widgets/showMesages.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -43,6 +45,17 @@ class AuthServices {
 
     return user.user;
   }
+
+  Future<bool> checkUsernameExists(String username) async {
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection("User")
+        .where("seeName", isEqualTo: username)
+        .get();
+
+    return querySnapshot.docs.isNotEmpty;
+  }
+
+  TextEditingController _userName = TextEditingController();
 
   Future<void> signInWithGoogle(
       {required BuildContext context,
@@ -100,31 +113,134 @@ class AuthServices {
                   profile: false,
                 );
               },
-            ));
+            )).then((value) {});
           } else {
             log("kabul etti***");
-            await _firestore.collection("User").doc(user.uid).set({
-              "userName": user.displayName,
-              "email": user.email,
-              "seeName": user.displayName,
-              "backgroundImage": "",
-              "bio": "",
-              "id": user.uid,
-              "image": "",
-              "password": "",
-              "isUserPrivacyPolicyAccept": true
-            });
-
             EasyLoading.dismiss();
+            dynamic result = await showGeneralDialog(
+                context: context,
+                barrierLabel: "",
+                transitionDuration: Duration(seconds: 1),
+                barrierDismissible: false,
+                pageBuilder: (context, animation, secondaryAnimation) {
+                  return WillPopScope(
+                    onWillPop: () {
+                      return null!;
+                    },
+                    child: StatefulBuilder(
+                        builder: (BuildContext context, StateSetter setStates) {
+                      return AlertDialog(
+                        title: Text("Kulanıcı adını gir"),
+                        shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(15.0))),
+                        contentPadding: EdgeInsets.only(
+                            left: 20, right: 20, bottom: 0, top: 0),
+                        content: Container(
+                          height: MediaQuery.of(context).size.width * 0.84,
+                          width: MediaQuery.of(context).size.width,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              TextField(
+                                controller: _userName,
+                              ),
+                              SizedBox(
+                                height: 8,
+                              ),
+                              InkWell(
+                                  onTap: () async {
+                                    // Kullanıcının girdiği kullanıcı adını kontrol et
+                                    bool usernameExists =
+                                        await checkUsernameExists(
+                                            _userName.text);
 
-            // articleStart sayfasına yönlendir
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => ArticleStart(
-                        index: 0,
-                      )),
-            );
+                                    if (usernameExists) {
+                                      // Kullanıcı adı zaten mevcut
+                                      print("Kullanıcı adı kayıtlı!");
+                                      Fluttertoast.showToast(
+                                          msg:
+                                              'Bu kullanıcı adı zaten kullanılıyor.\nBaşka bir tane yazın');
+                                    } else {
+                                      // Kullanıcı adı mevcut değil, veritabanında güncelle
+                                      print("Kullanıcı adı güncellendi: ");
+                                      // Veritabanında kullanıcı adını güncelleme işlemini burada yapabilirsiniz
+                                      Navigator.of(context).pop(true);
+                                    }
+                                  },
+                                  child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 10, right: 10),
+                                      child: Container(
+                                          height: 60,
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(7),
+                                              color: Colors.blue),
+                                          child: Center(
+                                              child: Text("Kaydet",
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.w500)))))),
+                              SizedBox(
+                                height: 8,
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 10, right: 10),
+                                child: InkWell(
+                                  onTap: () {
+                                    exit(0);
+                                  },
+                                  child: Container(
+                                    height: 60,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(7),
+                                        border: Border.all(color: Colors.blue)),
+                                    child: Center(
+                                      child: Text(
+                                        "Vazgeç",
+                                        style: TextStyle(
+                                            color: Colors.blue,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      );
+                    }),
+                  );
+                });
+            log("result* * $result");
+            if (result == true) {
+              await _firestore.collection("User").doc(user.uid).set({
+                "userName": user.displayName,
+                "email": user.email,
+                "seeName": _userName.text,
+                "backgroundImage": "",
+                "bio": "",
+                "id": user.uid,
+                "image": "",
+                "password": "",
+                "rozetId":0,
+                "isUserPrivacyPolicyAccept": true
+              });
+
+              // articleStart sayfasına yönlendir
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ArticleStart(
+                          index: 0,
+                        )),
+              );
+            }
           }
         }
       }
