@@ -226,9 +226,9 @@ class AuthServices {
             log("result* * $result");
             if (result == true) {
               await _firestore.collection("User").doc(user.uid).set({
-                "userName": user.displayName,
+                "userName":_userName.text.toString(),
                 "email": user.email,
-                "seeName": _userName.text.trim().toString(),
+                "seeName": user.displayName,
                 "backgroundImage": "",
                 "bio": "",
                 "id": user.uid,

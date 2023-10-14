@@ -307,7 +307,7 @@ class _ArticleDetailState extends State<ArticleDetail> {
                             ],
                           ),
                           SizedBox(
-                            width: 50,
+                            width: 30,
                           ),
                           Row(
                             children: [
