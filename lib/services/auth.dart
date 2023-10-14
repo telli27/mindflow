@@ -167,7 +167,7 @@ class AuthServices {
                                       print("Kullanıcı adı kayıtlı!");
                                       Fluttertoast.showToast(
                                           msg:
-                                              'Bu kullanıcı adı zaten kullanılıyor.\nBaşka bir tane yazın');
+                                              'Bu kullanıcı adı zaten kullanılıyor.\nBaşka bir kullanıcı adı yazın');
                                     } else {
                                       // Kullanıcı adı mevcut değil, veritabanında güncelle
                                       print("Kullanıcı adı güncellendi: ");
@@ -228,7 +228,7 @@ class AuthServices {
               await _firestore.collection("User").doc(user.uid).set({
                 "userName": user.displayName,
                 "email": user.email,
-                "seeName": _userName.text,
+                "seeName": _userName.text.trim().toString(),
                 "backgroundImage": "",
                 "bio": "",
                 "id": user.uid,
