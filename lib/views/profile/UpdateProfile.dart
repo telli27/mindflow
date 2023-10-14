@@ -418,7 +418,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
 
         File compressedFile = await FlutterNativeImage.compressImage(
           pickedFile!.path,
-          quality: 5,
+          quality: 100,
         );
         setState(() {
           profileImage = XFile(compressedFile.path);

@@ -19,10 +19,17 @@ class SelectedImage extends StatefulWidget {
 
 class _SelectedImageState extends State<SelectedImage> {
   StorageServices storageServices = StorageServices();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    context.read< ArticleCtx>().sourcheCtx.text = "";
+  }
 
   @override
   Widget build(BuildContext context) {
     final articleCtx = Provider.of<ArticleCtx>(context, listen: true);
+   
     return Padding(
       padding: const EdgeInsets.only(
         left: 8,
@@ -36,98 +43,100 @@ class _SelectedImageState extends State<SelectedImage> {
         ),
         child: SingleChildScrollView(
           child: Center(
-            child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Tooltip(
-                        triggerMode: TooltipTriggerMode.tap,
-                        showDuration: Duration(seconds: 5),
-                        message:
-                            " 'Makale' \nSize Ait ise Eğer Kaynak Olarak Kullanıcı Adınızı Belirtebilirsiniz",
-                        child: Container(
-                            child: Padding(
-                          padding: const EdgeInsets.only(left: 0, right: 0),
-                          child: Expanded(
-                            child: TextInputWidget(
-                              controller: articleCtx.sourcheCtx,
-                              hintText: "Kaynak Belirtin",
-                              readOnly: false,
+              child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+            /*  Tooltip(
+                triggerMode: TooltipTriggerMode.tap,
+                showDuration: Duration(seconds: 5),
+                message:
+                    " 'Makale' \nSize Ait ise Eğer Kaynak Olarak Kullanıcı Adınızı Belirtebilirsiniz",
+                child: Container(
+                    child: Padding(
+                  padding: const EdgeInsets.only(left: 0, right: 0),
+                  child: Expanded(
+                    child: TextInputWidget(
+                      controller: articleCtx.sourcheCtx,
+                      hintText: "Kaynak Belirtin",
+                      readOnly: false,
+                      
+                    ),
+                  ),
+                )),
+              ),*/
+              SizedBox(
+                height: 0,
+              ),
+              articleCtx.articleImage == null|| articleCtx.articleImage.toString()=="null"
+                  ? Padding(
+                      padding: const EdgeInsets.only(right: 0.0),
+                      child: TextFormField(
+                        maxLines: 20,
+                        onTap: () {
+                          articleCtx.selectImageArticle(ImageSource.gallery,
+                              context: context);
+                        },
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        decoration: InputDecoration(
+                          suffixIcon: Center(
+                            child: Column(
+                              children: [
+                                FaIcon(
+                                  FontAwesomeIcons.image,
+                                  size: 100,
+                                ),
+                                Text(
+                                  "Resim Seç",
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold),
+                                )
+                              ],
                             ),
                           ),
-                        )),
-                      ),
-                      SizedBox(
-                        height: 0,
-                      ),
-                   articleCtx.articleImage == null
-                ?    Padding(
-                        padding: const EdgeInsets.only(right: 0.0),
-                        child: TextFormField(
-                          maxLines: 20,
-                          onTap: () {
-                            articleCtx.selectImageArticle(ImageSource.gallery,
-                                context: context);
-                          },
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          decoration: InputDecoration(
-                            suffixIcon: Center(
-                              child: Column(
-                                children: [
-                                  FaIcon(
-                                    FontAwesomeIcons.image,
-                                    size: 100,
-                                  ),
-                                  Text(
-                                    "Resim Seç",
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold),
-                                  )
-                                ],
-                              ),
+                          contentPadding: EdgeInsets.symmetric(
+                              vertical: 28.0, horizontal: 12.0),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(6.0),
+                            borderSide: BorderSide(
+                              color: Colors.blue.withOpacity(0.2),
                             ),
-                            contentPadding: EdgeInsets.symmetric(
-                                vertical: 28.0, horizontal: 12.0),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(6.0),
-                              borderSide: BorderSide(
-                                color: Colors.blue.withOpacity(0.2),
-                              ),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(6.0),
-                              borderSide: BorderSide(
-                                color: Color(0xFFF6F5F5),
-                                width: 1.0,
-                              ),
-                            ),
-                            filled: true,
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide(color: Color(0xFFF6F5F5)),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(6.0)),
-                            ),
-                            labelStyle: TextStyle(color: Colors.grey),
-                            hintStyle:
-                                TextStyle(color: Colors.grey, fontSize: 12),
                           ),
-                          readOnly: true,
-                          autofocus: false,
-                          keyboardType: TextInputType.text,
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700,
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(6.0),
+                            borderSide: BorderSide(
+                              color: Color(0xFFF6F5F5),
+                              width: 1.0,
+                            ),
                           ),
-                          onSaved: (value) {},
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return "Detay Boş Olamaz";
-                            }
-                            return null;
-                          },
+                          filled: true,
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(color: Color(0xFFF6F5F5)),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(6.0)),
+                          ),
+                          labelStyle: TextStyle(color: Colors.grey),
+                          hintStyle:
+                              TextStyle(color: Colors.grey, fontSize: 12),
                         ),
-                      ): Column(
+                        readOnly: true,
+                        autofocus: false,
+                        keyboardType: TextInputType.text,
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w700,
+                        ),
+                        onSaved: (value) {},
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Detay Boş Olamaz";
+                          }
+                          return null;
+                        },
+                      ),
+                    )
+                  : Column(
                       children: [
                         Text(
                           "Seçilen Resim",
@@ -156,10 +165,8 @@ class _SelectedImageState extends State<SelectedImage> {
                         ),
                       ],
                     ),
-                    ],
-                  )
-                
-          ),
+            ],
+          )),
         ),
       ),
     );

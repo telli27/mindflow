@@ -85,12 +85,17 @@ class _Card3State extends State<Card3> {
                       SizedBox(
                         height: 10,
                       ),
-                      Text(
-                        widget.d.title,
-                        style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.w600),
-                        maxLines: 4,
-                        overflow: TextOverflow.ellipsis,
+                      Container(
+                        width: 200,
+                        child: Text(
+                          widget.d.title,
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600,
+                              overflow: TextOverflow.ellipsis),
+                          maxLines: 4,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
                       SizedBox(
                         height: 10,
@@ -109,11 +114,12 @@ class _Card3State extends State<Card3> {
                             timeago.format(date, locale: "tr"),
                             style: TextStyle(
                                 color: Theme.of(context).secondaryHeaderColor,
-                                fontSize: 13,fontWeight: FontWeight.bold),
+                                fontSize: 13,
+                                fontWeight: FontWeight.bold),
                           ),
                         ],
                       ),
-                     SizedBox(
+                      SizedBox(
                         height: 10,
                       ),
                       Row(
@@ -142,7 +148,9 @@ class _Card3State extends State<Card3> {
                                   FaIcon(
                                     FontAwesomeIcons.thumbsUp,
                                     color: Theme.of(context).brightness ==
-                                            Brightness.dark?Colors.white: Colors.black,
+                                            Brightness.dark
+                                        ? Colors.white
+                                        : Colors.black,
                                     size: 15,
                                   ),
                                   SizedBox(

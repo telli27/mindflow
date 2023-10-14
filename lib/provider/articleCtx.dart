@@ -32,7 +32,7 @@ class ArticleCtx extends ChangeNotifier {
   Map<String, dynamic> selectedCategoryJson = {};
   String selectedCategoryName = "";
   TextEditingController titleCtx = TextEditingController();
-  TextEditingController sourcheCtx = TextEditingController();
+  TextEditingController sourcheCtx = TextEditingController(text: "");
 
   changeSelected(int index) {
     selectedIndex = index;
@@ -109,7 +109,7 @@ class ArticleCtx extends ChangeNotifier {
     notifyListeners();
   }
 
-  XFile? articleImage;
+  XFile? articleImage=null;
   dynamic? pickImage;
 
   final ImagePicker _pickerImage = ImagePicker();
@@ -141,7 +141,7 @@ class ArticleCtx extends ChangeNotifier {
 
         File compressedFile = await FlutterNativeImage.compressImage(
           pickedFile!.path,
-          quality: 5,
+          quality: 100,
         );
        
           articleImage = XFile(compressedFile.path);

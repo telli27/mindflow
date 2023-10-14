@@ -487,7 +487,7 @@ class _ArticleDetailState extends State<ArticleDetail> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
-                          "Kaynak : ",
+                          "Kaynak : " + widget.article.source.toString()??"boş",
                           style: TextStyle(
                               color:
                                   Theme.of(context).brightness == Brightness.dark
