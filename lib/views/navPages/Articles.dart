@@ -1,21 +1,12 @@
-import 'dart:developer';
-
-import 'package:google_fonts/google_fonts.dart';
-import 'package:mindflow/Cards/Card1.dart';
-import 'package:mindflow/Cards/Card2.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_pagination/firebase_pagination.dart';
 import 'package:flutter/material.dart';
-
-import 'package:mindflow/Cards/Card3.dart';
-import 'package:mindflow/Cards/Card4.dart';
-import 'package:mindflow/Cards/Card5.dart';
-import 'package:mindflow/Cards/Card6.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mindflow/model/ArticleModel.dart';
+import 'package:mindflow/Cards/Card3.dart';
 
 class TabBodyPage extends StatefulWidget {
   final int categoryId;
   String title;
+
   TabBodyPage({
     Key? key,
     required this.categoryId,
@@ -27,79 +18,65 @@ class TabBodyPage extends StatefulWidget {
 }
 
 class _TabBodyPageState extends State<TabBodyPage> {
-  final int batchSize = 20;
-  late Query<Map<String, dynamic>> _query;
-  late Stream<QuerySnapshot<Map<String, dynamic>>> _articleStream;
+  late Stream<QuerySnapshot> _articleStream;
   final ScrollController _scrollController = ScrollController();
 
   @override
-  Widget build(BuildContext context) {
-    return RefreshIndicator(
-      onRefresh: () {
-        return Future.delayed(
-          Duration(seconds: 1),
-          () {
-            setState(() {
-              FirebaseFirestore.instance
-                  .collection('articles')
-                  .where('categoryId', isEqualTo: widget.categoryId);
-            });
-          },
-        );
-      },
-      child: FirestorePagination(
-        limit: 5, // Defaults to 10.
-      
-        initialLoader: Center(
-          child: CircularProgressIndicator(),
-        ),
-        viewType: ViewType.list,
-        onEmpty: Center(
-          child: Text("${widget.title} ile ilgili bir paylaşım bulunamadı",
-            style: GoogleFonts.signika(
-                color: Colors.black, fontSize: 15, fontWeight: FontWeight.w500),
-          ),
-        ),
-        bottomLoader: const Center(
-          child: CircularProgressIndicator(
-            strokeWidth: 3,
-            color: Colors.blue,
-          ),
-        ),
-        query: FirebaseFirestore.instance
-            .collection('articles')
-            .where('categoryId', isEqualTo: widget.categoryId),
+  void initState() {
+    super.initState();
+    _articleStream = FirebaseFirestore.instance
+        .collection('articles')
+        .where('categoryId', isEqualTo: widget.categoryId)
+        .snapshots();
+  }
 
-        itemBuilder: (context, documentSnapshot, index) {
-          var articles = documentSnapshot.data() as Map<String, dynamic>?;
-          var articleId = documentSnapshot.id; // Döküman ID'sini alın
-          log("articleId* ** ** $articleId");
-          if (articles!.length <= 0) {
-            return Center(
-              child: Text("İçerik Bulunamadı"),
-            );
-          }
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Card3(
-              d: ArticleModel.fromMap(articles!),
-              articleId: articleId,
-              onBackState: (value) async {
-                return Future.delayed(
-                  Duration(seconds: 1),
-                  () {
-                    setState(() {
-                      FirebaseFirestore.instance
-                          .collection('articles')
-                          .where('categoryId', isEqualTo: widget.categoryId);
-                    });
-                  },
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<QuerySnapshot>(
+      stream: _articleStream,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        } else if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+          return Center(
+              child:
+                  Text("${widget.title} ile ilgili bir paylaşım bulunamadı"));
+        } else {
+          final articles = snapshot.data!.docs;
+          return NotificationListener<ScrollNotification>(
+            onNotification: (ScrollNotification scrollInfo) {
+              if (scrollInfo is ScrollEndNotification &&
+                  _scrollController.position.extentAfter == 0) {
+                // Load more articles when the user reaches the end of the list.
+                // You can implement your logic here.
+              }
+              return false;
+            },
+            child: ListView.builder(
+              controller: _scrollController,
+              itemCount: articles.length,
+              itemBuilder: (context, index) {
+                final articleData =
+                    articles[index].data() as Map<String, dynamic>;
+                final articleId = articles[index].id;
+
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Card3(
+                    d: ArticleModel.fromMap(articleData),
+                    articleId: articleId,
+                    onBackState: (bb) {
+                      // Handle your onBackState logic here
+                    },
+                  ),
                 );
               },
             ),
           );
-        },
-      ),
+        }
+      },
     );
   }
 
