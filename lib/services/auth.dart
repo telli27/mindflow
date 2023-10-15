@@ -231,6 +231,7 @@ class AuthServices {
                 "seeName": user.displayName,
                 "backgroundImage": "",
                 "bio": "",
+                "isAdmin":false,
                 "id": user.uid,
                 "image": "",
                 "password": "",
