@@ -52,7 +52,7 @@ class _WriteUserSendArticleState extends State<WriteUserSendArticle> {
               setState(() {
                 
               });
-                 }, articleId: articleId),
+                 }, articleId: articleId, profile: true,),
               );
             },
           ),

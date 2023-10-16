@@ -69,7 +69,7 @@ class _TabBodyPageState extends State<TabBodyPage> {
                     articleId: articleId,
                     onBackState: (bb) {
                       // Handle your onBackState logic here
-                    },
+                    }, profile: false,
                   ),
                 );
               },

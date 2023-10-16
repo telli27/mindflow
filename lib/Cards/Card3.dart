@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -14,11 +15,13 @@ import '../views/Article/ArticleDetail.dart';
 import 'catcedImage.dart';
 
 class Card3 extends StatefulWidget {
+  bool profile;
   final ArticleModel d;
   ValueChanged onBackState;
   final dynamic articleId;
   Card3({
     Key? key,
+    required this.profile,
     required this.d,
     required this.onBackState,
     required this.articleId,
@@ -30,6 +33,75 @@ class Card3 extends StatefulWidget {
 
 class _Card3State extends State<Card3> {
   String categoriesName = "";
+  Future<void> deleteArticleById(String articleId) async {
+    final User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      final userId = user.uid;
+      try {
+        // Kullanıcının isAdmin alanına bak
+        DocumentSnapshot userDoc = await FirebaseFirestore.instance
+            .collection('User')
+            .doc(userId)
+            .get();
+        bool isAdmin = userDoc['isAdmin'] ??
+            false; // Varsayılan olarak false kabul ediyoruz
+
+        if (isAdmin) {
+          // Eğer kullanıcı adminse, makaleyi sil
+          await FirebaseFirestore.instance
+              .collection('articles')
+              .doc(articleId)
+              .delete();
+          print('Makale silindi.');
+        } else {
+          print('Kullanıcı admin değil.');
+        }
+      } catch (e) {
+        print('Hata: $e');
+      }
+    } else {
+      print('Oturum açmış bir kullanıcı yok.');
+    }
+  }
+
+  bool _isAdmin = false;
+  void isAdminCheck() async {
+    DocumentSnapshot userDoc = await FirebaseFirestore.instance
+        .collection('User')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+    bool isAdmin =
+        userDoc['isAdmin'] ?? false; // Varsayılan olarak false kabul ediyoruz
+    if (isAdmin == true) {
+      _isAdmin = isAdmin;
+      setState(() {});
+    }
+  }
+
+  Future<void> deleteArticleByIdUser(String articleId) async {
+    final User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      final userId = user.uid;
+      try {
+        // Eğer kullanıcı adminse, makaleyi sil
+        await FirebaseFirestore.instance
+            .collection('articles')
+            .doc(articleId)
+            .delete();
+        print('Makale silindi.');
+      } catch (e) {
+        print('Hata: $e');
+      }
+    } else {
+      print('Oturum açmış bir kullanıcı yok.');
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+      isAdminCheck();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -174,6 +246,45 @@ class _Card3State extends State<Card3> {
                   ),
                 ],
               )),
+          if (_isAdmin == true) ...{
+            Visibility(
+              visible: true,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: InkWell(
+                  onTap: () {
+                    deleteArticleById(widget.articleId);
+                    setState(() {});
+                  },
+                  child: Align(
+                      alignment: Alignment.topRight,
+                      child: Icon(
+                        Icons.delete,
+                        color: Colors.red,
+                      )),
+                ),
+              ),
+            ),
+          } else if (widget.profile == true) ...{
+            Visibility(
+              visible: true,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: InkWell(
+                  onTap: () {
+                    deleteArticleByIdUser(widget.articleId);
+                    setState(() {});
+                  },
+                  child: Align(
+                      alignment: Alignment.topRight,
+                      child: Icon(
+                        Icons.delete,
+                        color: Colors.red,
+                      )),
+                ),
+              ),
+            )
+          },
           Positioned(
             bottom: 10,
             right: 10,
