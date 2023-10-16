@@ -1,15 +1,18 @@
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:mindflow/config/appConfig.dart';
+import 'package:mindflow/provider/articleCtx.dart';
 import 'package:mindflow/services/auth.dart';
 import 'package:mindflow/views/registerandlogin/register.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:sign_button/create_button.dart';
 import 'package:sign_button/sign_button.dart';
 
 import '../../privacyPolicy.dart';
+import '../../provider/authCtx.dart';
 import '../../widgets/animatedSplash.dart';
 import 'login.dart';
 
@@ -55,6 +58,9 @@ class _LoginAndRegisterState extends State<LoginAndRegister>
   @override
   Widget build(BuildContext context) {
     //_authServices.signOut();
+    final _authProvider = Provider.of<AuthCtx>(context, listen: true);
+    final _articleCtx = Provider.of<ArticleCtx>(context, listen: true);
+
     final color = Colors.black;
     _scale = 1 - _controller.value;
     return AnnotatedRegion<SystemUiOverlayStyle>(
@@ -169,47 +175,48 @@ class _LoginAndRegisterState extends State<LoginAndRegister>
                             context: context, isPrivacyPolicyAccepted: false);
                         ;
                       },
-                    )
-                    /* DelayedAnimation(
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.push(context, MaterialPageRoute(
-                                builder: (context) {
-                                  return Register();
-                                },
-                              ));
+                    ),
+                    /*    DelayedAnimation(
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(
+                            builder: (context) {
+                              return Register();
                             },
-                            child: _animatedButtonUIRegister,
-                          ),
-                          delay: delayedAmount + 4000,
-                        ),
-                        SizedBox(
-                          height: 30.0,
-                        ),
-                        DelayedAnimation(
-                          child: Text(
-                            "Hesabın var mı ?",
-                            style: TextStyle(
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.bold,
-                                color: color),
-                          ),
-                          delay: delayedAmount + 5000,
-                        ),
-                        SizedBox(
-                          height: 30.0,
-                        ),
-                   DelayedAnimation(
-                          child: GestureDetector(
-                            onTapDown: _onTapDown,
-                            onTapUp: _onTapUp,
-                            child: Transform.scale(
-                              scale: _scale,
-                              child: _animatedButtonUI,
-                            ),
-                          ),
-                          delay: delayedAmount + 4000,
-                        ),*/
+                          ));
+                        },
+                        child: _animatedButtonUIRegister,
+                      ),
+                      delay: delayedAmount + 4000,
+                    ),
+                    SizedBox(
+                      height: 30.0,
+                    ),
+                    DelayedAnimation(
+                      child: Text(
+                        "Hesabın var mı ?",
+                        style: TextStyle(
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
+                            color: color),
+                      ),
+                      delay: delayedAmount + 5000,
+                    ),
+                    SizedBox(
+                      height: 30.0,
+                    ),*/
+                    SizedBox(
+                      height: 50,
+                    ),
+                    Visibility(
+                      visible: _articleCtx.isTestOpen!,
+                      child: GestureDetector(
+                        onTap: () {
+                          _onTapDown(_authProvider);
+                        },
+                        child: _animatedButtonUI,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -223,15 +230,15 @@ class _LoginAndRegisterState extends State<LoginAndRegister>
         width: 270,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(100.0),
-          color: Colors.black,
+        color: Color.fromARGB(255, 49, 51, 85),
         ),
         child: Center(
           child: Text(
-            'Giriş Yap',
+            'Test Girişi',
             style: TextStyle(
               fontSize: 20.0,
               fontWeight: FontWeight.bold,
-              color: Color(0xFF8185E2),
+              color: Colors.white,
             ),
           ),
         ),
@@ -241,7 +248,7 @@ class _LoginAndRegisterState extends State<LoginAndRegister>
         width: 270,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(100.0),
-          color: Colors.black,
+          color: Color(0xFF8185E2),
         ),
         child: Center(
           child: Text(
@@ -254,13 +261,9 @@ class _LoginAndRegisterState extends State<LoginAndRegister>
           ),
         ),
       );
-  void _onTapDown(TapDownDetails details) {
-    _controller.forward();
-    Navigator.push(context, MaterialPageRoute(
-      builder: (context) {
-        return Login();
-      },
-    ));
+  void _onTapDown(_authProvider) {
+    _authProvider.login(
+        context: context, email: "test@gmail.com", password: "Mevlana10");
   }
 
   void _onTapUp(TapUpDetails details) {

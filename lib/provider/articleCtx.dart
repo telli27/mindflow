@@ -109,7 +109,7 @@ class ArticleCtx extends ChangeNotifier {
     notifyListeners();
   }
 
-  XFile? articleImage=null;
+  XFile? articleImage = null;
   dynamic? pickImage;
 
   final ImagePicker _pickerImage = ImagePicker();
@@ -143,9 +143,9 @@ class ArticleCtx extends ChangeNotifier {
           pickedFile!.path,
           quality: 100,
         );
-       
-          articleImage = XFile(compressedFile.path);
-      
+
+        articleImage = XFile(compressedFile.path);
+
         if (articleImage != null) {}
         notifyListeners();
         print('aaa');
@@ -179,6 +179,30 @@ class ArticleCtx extends ChangeNotifier {
     } catch (e) {
       EasyLoading.dismiss();
       print('Makale eklenirken bir hata oluştu: $e');
+    }
+  }
+
+  bool? isTestOpen;
+  Future<void> checkTestField() async {
+    try {
+      QuerySnapshot querySnapshot =
+          await FirebaseFirestore.instance.collection('config').limit(1).get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        // İlk dokümanı alıyoruz çünkü sorgu sonucunda sadece bir doküman çekeceğiz.
+        DocumentSnapshot doc = querySnapshot.docs.first;
+         isTestOpen =
+            doc['test']; // Varsayılan olarak "test" alanınızın adı
+        if (isTestOpen==true) {
+          print("Test açık");
+        } else {
+          print("Test açık değil");
+        }
+      } else {
+        print("Belirli bir doküman bulunamadı.");
+      }
+    } catch (e) {
+      print("Hata: $e");
     }
   }
 }
