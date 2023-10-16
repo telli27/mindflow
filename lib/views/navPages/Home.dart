@@ -1,3 +1,4 @@
+import 'package:mindflow/provider/articleCtx.dart';
 import 'package:mindflow/views/navPages/Articles.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -6,6 +7,8 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:provider/provider.dart';
+import 'package:ticker_text/ticker_text.dart';
 
 import '../../config/appConfig.dart';
 import '../../model/usermodel.dart';
@@ -28,6 +31,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    final articleCtx = Provider.of<ArticleCtx>(context, listen: true);
     setState(() {
       SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
         systemNavigationBarDividerColor: Colors.white,
@@ -149,6 +153,30 @@ class _HomeState extends State<Home> {
               )
             ],
           ),
+          articleCtx.message.toString().isEmpty || articleCtx.message == ""
+              ? Container()
+              : Padding(
+                padding: const EdgeInsets.only(
+                  left: 20,right: 20
+                ),
+                child: SizedBox(
+                    width:MediaQuery.of(context).size.width, // constrain the parent width so the child overflows and scrolling takes effect
+                    child: TickerText(
+                      // default values
+              
+                      scrollDirection: Axis.horizontal,
+                      speed: 25,
+                      startPauseDuration: const Duration(seconds: 2),
+                      endPauseDuration: const Duration(seconds: 5),
+                      returnDuration: const Duration(seconds: 2),
+                      primaryCurve: Curves.linear,
+                      returnCurve: Curves.easeOut,
+                      child: Text(articleCtx.message.toString(),style: TextStyle(
+                        color: Colors.red,fontWeight: FontWeight.bold
+                      ),),
+                    ),
+                  ),
+              ),
           Expanded(
             child: StreamBuilder<QuerySnapshot>(
               stream: FirebaseFirestore.instance
@@ -156,11 +184,11 @@ class _HomeState extends State<Home> {
                   .snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: Container(
-                    width: 150,
-                    height: 150,
-                    
-                    child: CircularProgressIndicator()));
+                  return Center(
+                      child: Container(
+                          width: 150,
+                          height: 150,
+                          child: CircularProgressIndicator()));
                 } else if (snapshot.hasError) {
                   return Text('Hata: ${snapshot.error}');
                 } else {

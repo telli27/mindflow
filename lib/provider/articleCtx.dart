@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -183,6 +184,7 @@ class ArticleCtx extends ChangeNotifier {
   }
 
   bool? isTestOpen;
+  String message = "";
   Future<void> checkTestField() async {
     try {
       QuerySnapshot querySnapshot =
@@ -191,9 +193,10 @@ class ArticleCtx extends ChangeNotifier {
       if (querySnapshot.docs.isNotEmpty) {
         // İlk dokümanı alıyoruz çünkü sorgu sonucunda sadece bir doküman çekeceğiz.
         DocumentSnapshot doc = querySnapshot.docs.first;
-         isTestOpen =
-            doc['test']; // Varsayılan olarak "test" alanınızın adı
-        if (isTestOpen==true) {
+        isTestOpen = doc['test']; // Varsayılan olarak "test" alanınızın adı
+        message = doc['message']; // Varsayılan olarak "test" alanınızın adı
+        log("message ** * $message");
+        if (isTestOpen == true) {
           print("Test açık");
         } else {
           print("Test açık değil");

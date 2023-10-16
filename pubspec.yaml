@@ -73,6 +73,7 @@ dependencies:
   sign_button: ^2.0.6
   google_fonts: ^4.0.4
   appflowy_editor: ^0.1.9
+  ticker_text: ^2.0.0
   
 
 dev_dependencies:
