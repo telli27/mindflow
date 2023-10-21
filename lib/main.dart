@@ -57,7 +57,7 @@ class _MyAppState extends State<MyApp> {
                 ? ThemeModel().lightMode
                 : ThemeModel().darkMode,
             darkTheme: ThemeModel().darkMode,
-            title: "MindFlow",
+            title: "Mindflow",
             home: Splash(),
             builder: EasyLoading.init(),
           );

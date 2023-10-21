@@ -12,6 +12,7 @@ import 'package:mindflow/model/ArticleModel.dart';
 import 'package:mindflow/provider/articleCtx.dart';
 
 import '../views/Article/ArticleDetail.dart';
+import '../widgets/showMesages.dart';
 import 'catcedImage.dart';
 
 class Card3 extends StatefulWidget {
@@ -81,17 +82,23 @@ class _Card3State extends State<Card3> {
   Future<void> deleteArticleByIdUser(String articleId) async {
     final User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
+
       final userId = user.uid;
-      try {
-        // Eğer kullanıcı adminse, makaleyi sil
-        await FirebaseFirestore.instance
-            .collection('articles')
-            .doc(articleId)
-            .delete();
-        print('Makale silindi.');
-      } catch (e) {
-        print('Hata: $e');
+      if(userId==widget.d.userId){
+try {
+          // Eğer kullanıcı adminse, makaleyi sil
+          await FirebaseFirestore.instance
+              .collection('articles')
+              .doc(articleId)
+              .delete();
+          print('Makale silindi.');
+        } catch (e) {
+          print('Hata: $e');
+        }
+      }else{
+       showMessage("Makale silinirken hata oluştu");
       }
+      
     } else {
       print('Oturum açmış bir kullanıcı yok.');
     }
@@ -267,7 +274,7 @@ class _Card3State extends State<Card3> {
             ),
           } else if (widget.profile == true) ...{
             Visibility(
-              visible: true,
+              visible:widget.d.userId==FirebaseAuth.instance.currentUser!.uid ,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: InkWell(

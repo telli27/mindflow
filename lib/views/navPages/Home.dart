@@ -60,7 +60,7 @@ class _HomeState extends State<Home> {
               Column(
                 children: [
                   Text(
-                    'MindFlow',
+                    'Mindflow',
                     style: GoogleFonts.courgette(
                         color: Colors.black,
                         fontSize: 28,
