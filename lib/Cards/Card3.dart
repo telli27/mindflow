@@ -65,6 +65,81 @@ class _Card3State extends State<Card3> {
     }
   }
 
+  Future<void> checkDeleteQuestions({required bool admin}) async {
+    await showGeneralDialog(
+        context: context,
+        barrierLabel: "",
+        transitionDuration: Duration(seconds: 1),
+        barrierDismissible: true,
+        pageBuilder: (context, animation, secondaryAnimation) {
+          return StatefulBuilder(
+              builder: (BuildContext context, StateSetter setStates) {
+            return AlertDialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(15.0))),
+              contentPadding:
+                  EdgeInsets.only(left: 20, right: 20, bottom: 0, top: 0),
+              title: Text(
+                "Makaleyi Silmek İstediğinizden Emin misiniz ?",
+                style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.red),
+              ),
+              actions: [
+                InkWell(
+                    onTap: () async {
+                      if (admin == true) {
+                        //  deleteArticleById(widget.articleId);
+                        log("adminn  ");
+                      } else {
+                          log("adminn değil ");
+                        //  deleteArticleByIdUser(widget.articleId);
+                      }
+                    },
+                    child: Padding(
+                        padding: const EdgeInsets.only(left: 10, right: 10),
+                        child: Container(
+                            height: 60,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(7),
+                                color: Colors.blue),
+                            child: Center(
+                                child: Text("Sil",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w500)))))),
+                SizedBox(
+                  height: 8,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10, right: 10),
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      height: 60,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(7),
+                          border: Border.all(color: Colors.blue)),
+                      child: Center(
+                        child: Text(
+                          "Vazgeç",
+                          style: TextStyle(
+                              color: Colors.blue,
+                              fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            );
+          });
+        });
+  }
+
   bool _isAdmin = false;
   void isAdminCheck() async {
     DocumentSnapshot userDoc = await FirebaseFirestore.instance
@@ -82,10 +157,9 @@ class _Card3State extends State<Card3> {
   Future<void> deleteArticleByIdUser(String articleId) async {
     final User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-
       final userId = user.uid;
-      if(userId==widget.d.userId){
-try {
+      if (userId == widget.d.userId) {
+        try {
           // Eğer kullanıcı adminse, makaleyi sil
           await FirebaseFirestore.instance
               .collection('articles')
@@ -95,10 +169,9 @@ try {
         } catch (e) {
           print('Hata: $e');
         }
-      }else{
-       showMessage("Makale silinirken hata oluştu");
+      } else {
+        showMessage("Makale silinirken hata oluştu");
       }
-      
     } else {
       print('Oturum açmış bir kullanıcı yok.');
     }
@@ -107,12 +180,12 @@ try {
   @override
   void initState() {
     super.initState();
-      isAdminCheck();
+    isAdminCheck();
   }
 
   @override
   Widget build(BuildContext context) {
-    final DateTime date = DateTime.parse(widget.d.date);
+    var date = DateTime.parse(widget.d.date.toString());
     final articleCtx = Provider.of<ArticleCtx>(context, listen: true);
     log("d.categoryId* **  ${widget.d.categoryId}  articleCtx.categories ${articleCtx.categories.length}");
 
@@ -260,7 +333,7 @@ try {
                 padding: const EdgeInsets.all(8.0),
                 child: InkWell(
                   onTap: () {
-                    deleteArticleById(widget.articleId);
+                    checkDeleteQuestions(admin: true);
                     setState(() {});
                   },
                   child: Align(
@@ -274,12 +347,14 @@ try {
             ),
           } else if (widget.profile == true) ...{
             Visibility(
-              visible:widget.d.userId==FirebaseAuth.instance.currentUser!.uid ,
+              visible:
+                  widget.d.userId == FirebaseAuth.instance.currentUser!.uid,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: InkWell(
                   onTap: () {
-                    deleteArticleByIdUser(widget.articleId);
+                    checkDeleteQuestions(admin: false);
+
                     setState(() {});
                   },
                   child: Align(

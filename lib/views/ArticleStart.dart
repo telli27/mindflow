@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:status_bar_control/status_bar_control.dart';
 import 'package:water_drop_nav_bar/water_drop_nav_bar.dart';
 import 'package:water_drop_nav_bar/water_drop_nav_bar.dart';
 
@@ -16,6 +17,7 @@ import 'package:mindflow/views/navPages/Home.dart';
 import 'package:mindflow/views/navPages/categoriesPage.dart';
 
 import '../provider/articleCtx.dart';
+import '../widgets/MyNavigationBar.dart';
 import 'Article/WriteArticle.dart';
 import 'navPages/setting.dart';
 import 'registerandlogin/loginandRegister.dart';
@@ -37,11 +39,8 @@ class _ArticleStartState extends State<ArticleStart> {
   @override
   void initState() {
     super.initState();
-       // Status bar rengini beyaz yap
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light.copyWith(
-      statusBarColor: Colors.white, // Status bar rengi
-      statusBarIconBrightness: Brightness.dark, // Simge rengi (siyah)
-    ));
+    initPlatformState();
+
     context.read<AuthCtx>().getCurrentUser();
 
     pageController =
@@ -54,8 +53,85 @@ class _ArticleStartState extends State<ArticleStart> {
   @override
   void dispose() {
     // Status bar rengini varsayılana geri döndür
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
     super.dispose();
+  }
+
+  double? _statusBarHeight = 0.0;
+  bool _statusBarColorAnimated = false;
+  Color? _statusBarColor = Colors.black;
+  double _statusBarOpacity = 1.0;
+  bool _statusBarHidden = false;
+  StatusBarAnimation _statusBarAnimation = StatusBarAnimation.NONE;
+  StatusBarStyle _statusBarStyle = StatusBarStyle.DEFAULT;
+  bool _statusBarTranslucent = false;
+  bool _loadingIndicator = false;
+  bool _fullscreenMode = false;
+
+  bool _navBarColorAnimated = false;
+  Color? _navBarColor = Colors.black;
+  NavigationBarStyle? _navBarStyle = NavigationBarStyle.DEFAULT;
+
+  // Platform messages are asynchronous, so we initialize in an async method.
+  Future<void> initPlatformState() async {
+    double? statusBarHeight;
+    // Platform messages may fail, so we use a try/catch PlatformException.
+    try {
+      statusBarHeight = await StatusBarControl.getHeight;
+    } on PlatformException {
+      statusBarHeight = 0.0;
+    }
+    if (!mounted) return;
+
+    setState(() {});
+  }
+
+  Widget renderTitle(String text) {
+    const textStyle = TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold);
+    return Text(text, style: textStyle);
+  }
+
+  void colorBarChanged(Color val) {
+    setState(() {
+      _statusBarColor = val;
+    });
+    updateStatusBar();
+  }
+
+  void updateStatusBar() {
+    StatusBarControl.setColor(_statusBarColor!.withOpacity(_statusBarOpacity),
+        animated: _statusBarColorAnimated);
+  }
+
+  void statusBarAnimationChanged(StatusBarAnimation val) {
+    setState(() {
+      _statusBarAnimation = val;
+    });
+  }
+
+  void statusBarStyleChanged(StatusBarStyle val) {
+    setState(() {
+      _statusBarStyle = val;
+    });
+    StatusBarControl.setStyle(val);
+  }
+
+  void colorNavBarChanged(Color val) {
+    setState(() {
+      _navBarColor = val;
+    });
+    updateNavBar();
+  }
+
+  void updateNavBar() {
+    StatusBarControl.setNavigationBarColor(_navBarColor!,
+        animated: _navBarColorAnimated);
+  }
+
+  void navigationBarStyleChanged(NavigationBarStyle val) {
+    setState(() {
+      _navBarStyle = val;
+    });
+    StatusBarControl.setNavigationBarStyle(val);
   }
 
   var _pages = [
@@ -66,32 +142,7 @@ class _ArticleStartState extends State<ArticleStart> {
   ];
   @override
   Widget build(BuildContext context) {
-       setState(() {
-      SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-        systemNavigationBarDividerColor: Colors.transparent,
-        statusBarColor: Theme.of(context).brightness == Brightness.dark
-            ? Colors.white
-            : Colors.black,
-        statusBarBrightness: Theme.of(context).brightness == Brightness.dark
-            ? Brightness.light
-            : Brightness.dark,
-      ));
-    });
     final articleCtx = Provider.of<ArticleCtx>(context, listen: true);
-    setState(() {
-      SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-        systemNavigationBarDividerColor: Colors.transparent,
-        statusBarColor: Theme.of(context).brightness == Brightness.dark
-            ? Colors.white
-            : Colors.black,
-        statusBarBrightness: Theme.of(context).brightness == Brightness.dark
-            ? Brightness.light
-            : Brightness.dark,
-        statusBarIconBrightness: Theme.of(context).brightness == Brightness.dark
-            ? Brightness.light
-            : Brightness.dark,
-      ));
-    });
     return AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light.copyWith(
           statusBarBrightness: Theme.of(context).brightness == Brightness.dark
@@ -110,129 +161,45 @@ class _ArticleStartState extends State<ArticleStart> {
             return null!;
           },
           child: Scaffold(
-              backgroundColor: Colors.grey[100],
-              body: _pages[articleCtx.selectedIndex],
-              bottomNavigationBar: BottomBar()),
-        ));
-  }
-}
-
-class BottomBar extends StatefulWidget {
-  BottomBar({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  State<BottomBar> createState() => _BottomBarState();
-}
-
-class _BottomBarState extends State<BottomBar> {
-  final primaryColor = const Color(0xff4338CA);
-
-  final secondaryColor = const Color(0xff6D28D9);
-
-  final accentColor = const Color(0xffffffff);
-
-  final backgroundColor = const Color(0xffffffff);
-
-  final errorColor = const Color(0xffEF4444);
-  int? selected;
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final articleCtx = Provider.of<ArticleCtx>(context, listen: true);
-
-    return BottomAppBar(
-      color: Colors.white,
-      child: SizedBox(
-        height: 80,
-        width: MediaQuery.of(context).size.width,
-        child: Padding(
-          padding: const EdgeInsets.only(left: 25.0, right: 25.0, bottom: 15),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              IconBottomBar(
-                  text: "Ana Sayfa",
-                  icon: FontAwesomeIcons.home,
-                  selected: articleCtx.selectedIndex == 0 ? true : false,
-                  onPressed: () {
-                    articleCtx.changeSelected(0);
-                  }),
-              IconBottomBar(
-                  text: "Kategoriler",
-                  icon: FontAwesomeIcons.clipboardList,
-                  selected: articleCtx.selectedIndex == 1 ? true : false,
-                  onPressed: () {
-                    articleCtx.changeSelected(1);
-                  }),
-              IconBottomBar(
-                  text: "İçerik Oluştur",
-                  icon: FontAwesomeIcons.edit,
-                  selected: articleCtx.selectedIndex == 2 ? true : false,
-                  onPressed: () {
+     
+            body: _pages[articleCtx.selectedIndex],
+            bottomNavigationBar: MyNavigationBar(
+              backgroundColor: Colors.white10,
+              labelBehavior:
+                  NavigationDestinationLabelBehavior.onlyShowSelected,
+              onItemTap: (int tappedIndex) {
+                print('Tapped index: $tappedIndex');
+                if(tappedIndex==2){
                     Navigator.push(context, MaterialPageRoute(
-                      builder: (context) {
-                        return WriteArticle();
-                      },
-                    ));
-                  }),
-              IconBottomBar(
-                  text: "Ayarlar",
-                  icon: FontAwesomeIcons.gear,
-                  selected: articleCtx.selectedIndex == 3 ? true : false,
-                  onPressed: () {
-                    articleCtx.changeSelected(3);
-                  }),
-            ],
+                    builder: (context) {
+                      return WriteArticle();
+                    },
+                  ));
+                }else{
+                  articleCtx.changeSelected(tappedIndex);
+                }
+                
+              },
+              destinations: const [
+                NavigationDestination(
+                  icon: FaIcon(FontAwesomeIcons.home),
+                  label: "Ana Sayfa",
+                ),
+                NavigationDestination(
+                  icon: FaIcon(FontAwesomeIcons.clipboardList),
+                  label: "Kategoriler",
+                ),
+                NavigationDestination(
+                  icon: FaIcon(FontAwesomeIcons.edit),
+                  label: "İçerik Oluştur",
+                ),
+                NavigationDestination(
+                  icon: FaIcon(FontAwesomeIcons.gear),
+                  label: "Ayarlar",
+                ),
+              ],
+            ),
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class IconBottomBar extends StatelessWidget {
-  const IconBottomBar(
-      {Key? key,
-      required this.text,
-      required this.icon,
-      required this.selected,
-      required this.onPressed})
-      : super(key: key);
-  final String text;
-  final IconData icon;
-  final bool selected;
-  final Function() onPressed;
-
-  //final primaryColor =// const Color(0xff4338CA);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        IconButton(
-          onPressed: onPressed,
-          icon: Icon(
-            icon,
-            size: 25,
-            color: selected ? Colors.black : Color.fromARGB(137, 62, 62, 62),
-          ),
-        ),
-        Text(
-          text,
-          style: TextStyle(
-              fontSize: 13,
-              height: .2,
-              color: selected ? Colors.black : Colors.grey.withOpacity(.75)),
-        )
-      ],
-    );
+        ));
   }
 }

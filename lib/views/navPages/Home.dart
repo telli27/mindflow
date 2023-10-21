@@ -8,6 +8,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
+import 'package:status_bar_control/status_bar_control.dart';
 import 'package:ticker_text/ticker_text.dart';
 
 import '../../config/appConfig.dart';
@@ -32,13 +33,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     final articleCtx = Provider.of<ArticleCtx>(context, listen: true);
-    setState(() {
-      SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-        systemNavigationBarDividerColor: Colors.white,
-        statusBarColor: Colors.white,
-        statusBarIconBrightness: Brightness.light,
-      ));
-    });
+
     return Scaffold(
         body: SafeArea(
       child: Column(
@@ -156,14 +151,14 @@ class _HomeState extends State<Home> {
           articleCtx.message.toString().isEmpty || articleCtx.message == ""
               ? Container()
               : Padding(
-                padding: const EdgeInsets.only(
-                  left: 20,right: 20
-                ),
-                child: SizedBox(
-                    width:MediaQuery.of(context).size.width, // constrain the parent width so the child overflows and scrolling takes effect
+                  padding: const EdgeInsets.only(left: 20, right: 20),
+                  child: SizedBox(
+                    width: MediaQuery.of(context)
+                        .size
+                        .width, // constrain the parent width so the child overflows and scrolling takes effect
                     child: TickerText(
                       // default values
-              
+
                       scrollDirection: Axis.horizontal,
                       speed: 25,
                       startPauseDuration: const Duration(seconds: 2),
@@ -171,12 +166,14 @@ class _HomeState extends State<Home> {
                       returnDuration: const Duration(seconds: 2),
                       primaryCurve: Curves.linear,
                       returnCurve: Curves.easeOut,
-                      child: Text(articleCtx.message.toString(),style: TextStyle(
-                        color: Colors.red,fontWeight: FontWeight.bold
-                      ),),
+                      child: Text(
+                        articleCtx.message.toString(),
+                        style: TextStyle(
+                            color: Colors.red, fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ),
-              ),
+                ),
           Expanded(
             child: StreamBuilder<QuerySnapshot>(
               stream: FirebaseFirestore.instance
@@ -185,15 +182,27 @@ class _HomeState extends State<Home> {
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(
-                      child: Container(
-                          width: 150,
-                          height: 150,
-                          child: CircularProgressIndicator()));
+                    child: Container(
+                      width: 150,
+                      height: 150,
+                      child: CircularProgressIndicator(),
+                    ),
+                  );
                 } else if (snapshot.hasError) {
                   return Text('Hata: ${snapshot.error}');
                 } else {
                   final List<QueryDocumentSnapshot<Object?>> categoriesGet =
                       snapshot.data!.docs;
+
+                  // "home" kategorisini categoriesGet listesinin en başına ekleyin
+                  categoriesGet.sort((a, b) {
+                    if (a['id'] == 99) {
+                      return -1; // "home" kategorisi önce gösterilsin
+                    } else if (b['id'] == 99) {
+                      return 1;
+                    }
+                    return a['id'].compareTo(b['id']);
+                  });
 
                   return Container(
                     child: DefaultTabController(
@@ -203,6 +212,14 @@ class _HomeState extends State<Home> {
                           Container(
                             child: TabBar(
                               tabs: categoriesGet.map((kategori) {
+                                if (kategori["id"] == 99) {
+                                  return Tab(
+                                    icon: FaIcon(
+                                            FontAwesomeIcons.home,
+                                            size: 20,
+                                          ), 
+                                  );
+                                }
                                 return Tab(
                                   text: kategori['title'],
                                 );
@@ -213,17 +230,19 @@ class _HomeState extends State<Home> {
                                   Color(0xff5f6368), //niceish grey
                               isScrollable: true,
                               labelStyle: TextStyle(
-                                  fontFamily: 'Manrope',
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w600),
+                                fontFamily: 'Manrope',
+                                fontSize: 15,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
                           ),
                           Expanded(
                             child: TabBarView(
                               children: categoriesGet.map((kategori) {
                                 return TabBodyPage(
-                                    categoryId: kategori["id"],
-                                    title: kategori["title"]);
+                                  categoryId: kategori["id"],
+                                  title: kategori["title"],
+                                );
                               }).toList(),
                             ),
                           ),

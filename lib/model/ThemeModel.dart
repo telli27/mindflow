@@ -8,6 +8,7 @@ class ThemeModel {
   static final homeTapIconColor = Colors.grey[800];
 
   final lightMode = ThemeData(
+    useMaterial3: true,
     primarySwatch: Colors.blue,
     primaryColor: Colors.black,
     accentColor: HexColor(AppConfig.splashTextColor),
@@ -20,8 +21,19 @@ class ThemeModel {
     secondaryHeaderColor: Colors.grey[600],
     shadowColor: Colors.grey[200],
     backgroundColor: Colors.white,
+    bottomNavigationBarTheme:BottomNavigationBarThemeData(
+      selectedItemColor: Colors.deepPurpleAccent,
+    ),
+    inputDecorationTheme: const InputDecorationTheme(
+      filled: true, //<-- SEE HERE
+      fillColor: Color.fromARGB(255, 238, 238, 239), //<-- SEE HERE
+      labelStyle: TextStyle(
+        color: Colors.white
+      )
+    ),
     appBarTheme: AppBarTheme(
       brightness: Brightness.light,
+      
       color: Colors.white,
       elevation: 0,
       iconTheme: IconThemeData(
@@ -43,7 +55,7 @@ class ThemeModel {
     ),
     textTheme: TextTheme(
       subtitle1: TextStyle(
-          fontWeight: FontWeight.w500, fontSize: 16, color: Colors.grey[900]),
+          fontWeight: FontWeight.w600, fontSize: 16, color: Colors.grey[900]),
       headline4: TextStyle(
         fontFamily: 'Manrope',
         fontSize: 18,
@@ -51,14 +63,11 @@ class ThemeModel {
         color: AppConfig.appColor,
       ),
     ),
-    bottomNavigationBarTheme: BottomNavigationBarThemeData(
-      backgroundColor: Colors.white,
-      selectedItemColor: Colors.white,
-      unselectedItemColor: Colors.grey[500],
-    ),
+  
   );
 
   final darkMode = ThemeData(
+    useMaterial3: true,
       primarySwatch: Colors.deepPurple,
       primaryColor: Colors.white,
       accentColor: Colors.white,
@@ -71,6 +80,10 @@ class ThemeModel {
       secondaryHeaderColor: Colors.grey[400],
       shadowColor: Color(0xff282828),
       backgroundColor: Colors.grey[900],
+      inputDecorationTheme: const InputDecorationTheme(
+          filled: true, //<-- SEE HERE
+          fillColor: Color.fromARGB(255, 238, 238, 239), //<-- SEE HERE
+          labelStyle: TextStyle(color: Colors.white)),
       appBarTheme: AppBarTheme(
         brightness: Brightness.dark,
         color: Colors.grey[900],

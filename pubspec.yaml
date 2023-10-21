@@ -74,6 +74,8 @@ dependencies:
   google_fonts: ^4.0.4
   appflowy_editor: ^0.1.9
   ticker_text: ^2.0.0
+  status_bar_control: ^3.2.1
+  share_plus: ^7.2.1
   
 
 dev_dependencies:
@@ -103,6 +105,7 @@ flutter:
   #   - images/a_dot_ham.jpeg
   assets:
     - assets/
+    - assets/notFound.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

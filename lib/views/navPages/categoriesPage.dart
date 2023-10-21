@@ -25,16 +25,16 @@ class _CategoriesPageState extends State<CategoriesPage> {
           appBar: AppBar(
             automaticallyImplyLeading: false,
             backgroundColor: Theme.of(context).brightness == Brightness.dark
-                          ?Colors.black: Colors.white,
+                ? Colors.black
+                : Colors.white,
             centerTitle: true,
             title: Text(
               "Kategoriler",
               style: TextStyle(
                   fontWeight: FontWeight.w700,
                   color: Theme.of(context).brightness == Brightness.dark
-                          ?Colors.white: Colors.black,
-                 
-                
+                      ? Colors.white
+                      : Colors.black,
                   fontSize: 20),
             ),
           ),
@@ -47,6 +47,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
               }
               // Firestore'dan verileri alın
               var categories = snapshot.data!.docs;
+           categories.removeWhere((element) => element["id"] == 99);
 
               // Kategorileri listelemek için bir ListView.builder kullanabilirsiniz.
               return GridView.builder(
@@ -55,6 +56,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
                   var category =
                       categories[index].data() as Map<String, dynamic>;
                   var categoryName = category['title']; // Kategori adını alın
+
                   return InkWell(
                     onTap: () {
                       Navigator.push(context, MaterialPageRoute(
@@ -68,7 +70,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
                               title: Text(
                                 category["title"],
                                 style: TextStyle(
-                                  fontSize: 20,
+                                    fontSize: 20,
                                     fontWeight: FontWeight.bold,
                                     color: Theme.of(context).brightness ==
                                             Brightness.dark
@@ -111,9 +113,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
                   );
                 },
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: 3/2
-                    ),
+                    crossAxisCount: 2, childAspectRatio: 3 / 2),
               );
             },
           ),

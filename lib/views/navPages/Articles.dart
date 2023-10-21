@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mindflow/model/ArticleModel.dart';
 import 'package:mindflow/Cards/Card3.dart';
 
@@ -24,10 +27,20 @@ class _TabBodyPageState extends State<TabBodyPage> {
   @override
   void initState() {
     super.initState();
-    _articleStream = FirebaseFirestore.instance
-        .collection('articles')
-        .where('categoryId', isEqualTo: widget.categoryId)
-        .snapshots();
+    if (widget.categoryId == 99) {
+      // Kategori ID'si 99 ise tüm makaleleri getir
+     _articleStream = FirebaseFirestore.instance
+          .collection('articles')
+          .orderBy('date', descending: true)
+          .snapshots();
+
+    } else {
+      // Diğer durumlarda sadece belirli bir kategoriye ait makaleleri getir
+      _articleStream = FirebaseFirestore.instance
+          .collection('articles')
+          .where('categoryId', isEqualTo: widget.categoryId)
+          .snapshots();
+    }
   }
 
   @override
@@ -41,10 +54,28 @@ class _TabBodyPageState extends State<TabBodyPage> {
           return Center(child: Text('Error: ${snapshot.error}'));
         } else if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
           return Center(
-              child:
-                  Text("${widget.title} ile ilgili bir paylaşım bulunamadı"));
+              child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CircleAvatar(
+                maxRadius: 110,
+                backgroundImage: AssetImage("assets/notFound.png"),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Text(
+                  "${widget.title} ile ilgili bir paylaşım bulunamadı",
+                  style: GoogleFonts.signika(
+                      color: Colors.black,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600),
+                ),
+              )
+            ],
+          ));
         } else {
           final articles = snapshot.data!.docs;
+          log("articles- --  ${articles.length}");
           return NotificationListener<ScrollNotification>(
             onNotification: (ScrollNotification scrollInfo) {
               if (scrollInfo is ScrollEndNotification &&
@@ -62,6 +93,7 @@ class _TabBodyPageState extends State<TabBodyPage> {
                     articles[index].data() as Map<String, dynamic>;
                 final articleId = articles[index].id;
 
+                log("articleData * * ${articleData["date"]}");
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Card3(
@@ -69,7 +101,8 @@ class _TabBodyPageState extends State<TabBodyPage> {
                     articleId: articleId,
                     onBackState: (bb) {
                       // Handle your onBackState logic here
-                    }, profile: false,
+                    },
+                    profile: false,
                   ),
                 );
               },
