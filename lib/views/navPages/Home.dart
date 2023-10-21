@@ -8,7 +8,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
-import 'package:status_bar_control/status_bar_control.dart';
 import 'package:ticker_text/ticker_text.dart';
 
 import '../../config/appConfig.dart';

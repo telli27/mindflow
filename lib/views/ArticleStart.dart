@@ -6,7 +6,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:status_bar_control/status_bar_control.dart';
 import 'package:water_drop_nav_bar/water_drop_nav_bar.dart';
 import 'package:water_drop_nav_bar/water_drop_nav_bar.dart';
 
@@ -39,7 +38,6 @@ class _ArticleStartState extends State<ArticleStart> {
   @override
   void initState() {
     super.initState();
-    initPlatformState();
 
     context.read<AuthCtx>().getCurrentUser();
 
@@ -56,83 +54,17 @@ class _ArticleStartState extends State<ArticleStart> {
     super.dispose();
   }
 
-  double? _statusBarHeight = 0.0;
-  bool _statusBarColorAnimated = false;
-  Color? _statusBarColor = Colors.black;
-  double _statusBarOpacity = 1.0;
-  bool _statusBarHidden = false;
-  StatusBarAnimation _statusBarAnimation = StatusBarAnimation.NONE;
-  StatusBarStyle _statusBarStyle = StatusBarStyle.DEFAULT;
-  bool _statusBarTranslucent = false;
-  bool _loadingIndicator = false;
-  bool _fullscreenMode = false;
 
-  bool _navBarColorAnimated = false;
-  Color? _navBarColor = Colors.black;
-  NavigationBarStyle? _navBarStyle = NavigationBarStyle.DEFAULT;
 
   // Platform messages are asynchronous, so we initialize in an async method.
-  Future<void> initPlatformState() async {
-    double? statusBarHeight;
-    // Platform messages may fail, so we use a try/catch PlatformException.
-    try {
-      statusBarHeight = await StatusBarControl.getHeight;
-    } on PlatformException {
-      statusBarHeight = 0.0;
-    }
-    if (!mounted) return;
-
-    setState(() {});
-  }
 
   Widget renderTitle(String text) {
     const textStyle = TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold);
     return Text(text, style: textStyle);
   }
 
-  void colorBarChanged(Color val) {
-    setState(() {
-      _statusBarColor = val;
-    });
-    updateStatusBar();
-  }
 
-  void updateStatusBar() {
-    StatusBarControl.setColor(_statusBarColor!.withOpacity(_statusBarOpacity),
-        animated: _statusBarColorAnimated);
-  }
-
-  void statusBarAnimationChanged(StatusBarAnimation val) {
-    setState(() {
-      _statusBarAnimation = val;
-    });
-  }
-
-  void statusBarStyleChanged(StatusBarStyle val) {
-    setState(() {
-      _statusBarStyle = val;
-    });
-    StatusBarControl.setStyle(val);
-  }
-
-  void colorNavBarChanged(Color val) {
-    setState(() {
-      _navBarColor = val;
-    });
-    updateNavBar();
-  }
-
-  void updateNavBar() {
-    StatusBarControl.setNavigationBarColor(_navBarColor!,
-        animated: _navBarColorAnimated);
-  }
-
-  void navigationBarStyleChanged(NavigationBarStyle val) {
-    setState(() {
-      _navBarStyle = val;
-    });
-    StatusBarControl.setNavigationBarStyle(val);
-  }
+ 
 
   var _pages = [
     Home(),
