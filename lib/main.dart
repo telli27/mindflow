@@ -1,3 +1,5 @@
+import 'package:device_preview/device_preview.dart';
+import 'package:flutter/foundation.dart';
 import 'package:mindflow/provider/articleCtx.dart';
 import 'package:mindflow/provider/themeCtx.dart';
 import 'package:mindflow/views/ArticleStart.dart';
@@ -30,7 +32,11 @@ void main() async {
       DeviceOrientation.portraitDown,
     ],
   );
-  runApp(const MyApp());
+  runApp(DevicePreview(
+    
+    enabled: !kReleaseMode,
+    builder: (context) => MyApp(), // Wrap your app
+  ));
 }
 
 class MyApp extends StatefulWidget {
@@ -41,10 +47,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
   @override
   Widget build(BuildContext context) {
-
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
 
     return MultiProvider(
@@ -56,6 +60,9 @@ class _MyAppState extends State<MyApp> {
         ],
         child: Consumer<ThemeProvider>(builder: ((context, value, child) {
           return MaterialApp(
+              useInheritedMediaQuery: true,
+            locale: DevicePreview.locale(context),
+            builder: DevicePreview.appBuilder,
             debugShowCheckedModeBanner: false,
             theme: value.theme == false
                 ? ThemeModel().lightMode
@@ -63,7 +70,7 @@ class _MyAppState extends State<MyApp> {
             darkTheme: ThemeModel().darkMode,
             title: "Mindflow",
             home: Splash(),
-            builder: EasyLoading.init(),
+        //    builder: EasyLoading.init(),
           );
         })));
   }
