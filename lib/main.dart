@@ -8,7 +8,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
-import 'package:mindflow/widgets/stepper/MindFlowStepper.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'model/ThemeModel.dart';
@@ -70,7 +69,7 @@ class _MyAppState extends State<MyApp> {
                 : ThemeModel().darkMode,
             darkTheme: ThemeModel().darkMode,
             title: "Mindflow",
-            home: StepperExample()//Splash(),
+            home: Splash(),
         //    builder: EasyLoading.init(),
           );
         })));
