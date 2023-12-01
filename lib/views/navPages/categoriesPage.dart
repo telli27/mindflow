@@ -22,7 +22,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
           systemNavigationBarIconBrightness: Brightness.dark,
         ),
         child: Scaffold(
-          appBar: AppBar(
+          appBar: AppBar(systemOverlayStyle: SystemUiOverlayStyle.dark,
             automaticallyImplyLeading: false,
             backgroundColor: Theme.of(context).brightness == Brightness.dark
                 ? Colors.black
