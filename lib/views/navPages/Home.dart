@@ -34,6 +34,7 @@ class _HomeState extends State<Home> {
     final articleCtx = Provider.of<ArticleCtx>(context, listen: true);
 
     return Scaffold(
+      
         body: SafeArea(
       child: Column(
         children: [

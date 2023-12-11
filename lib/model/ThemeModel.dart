@@ -3,12 +3,11 @@ import 'package:hexcolor/hexcolor.dart';
 
 import '../config/appConfig.dart';
 
-
 class ThemeModel {
   static final homeTapIconColor = Colors.grey[800];
 
   final lightMode = ThemeData(
-    useMaterial3: true,
+    useMaterial3: false,
     primarySwatch: Colors.blue,
     primaryColor: Colors.black,
     accentColor: HexColor(AppConfig.splashTextColor),
@@ -21,19 +20,15 @@ class ThemeModel {
     secondaryHeaderColor: Colors.grey[600],
     shadowColor: Colors.grey[200],
     backgroundColor: Colors.white,
-    bottomNavigationBarTheme:BottomNavigationBarThemeData(
+    bottomNavigationBarTheme: BottomNavigationBarThemeData(
       selectedItemColor: Colors.deepPurpleAccent,
     ),
     inputDecorationTheme: const InputDecorationTheme(
-      filled: true, //<-- SEE HERE
-      fillColor: Color.fromARGB(255, 238, 238, 239), //<-- SEE HERE
-      labelStyle: TextStyle(
-        color: Colors.white
-      )
-    ),
+        filled: true, //<-- SEE HERE
+        fillColor: Color.fromARGB(255, 238, 238, 239), //<-- SEE HERE
+        labelStyle: TextStyle(color: Colors.white)),
     appBarTheme: AppBarTheme(
       brightness: Brightness.light,
-      
       color: Colors.white,
       elevation: 0,
       iconTheme: IconThemeData(
@@ -63,11 +58,10 @@ class ThemeModel {
         color: AppConfig.appColor,
       ),
     ),
-  
   );
 
   final darkMode = ThemeData(
-    useMaterial3: true,
+      useMaterial3: false,
       primarySwatch: Colors.deepPurple,
       primaryColor: Colors.white,
       accentColor: Colors.white,
