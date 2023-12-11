@@ -62,7 +62,7 @@ class ThemeModel {
 
   final darkMode = ThemeData(
       useMaterial3: false,
-      primarySwatch: Colors.deepPurple,
+      
       primaryColor: Colors.white,
       accentColor: Colors.white,
       iconTheme: IconThemeData(color: Colors.black),
