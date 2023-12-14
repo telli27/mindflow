@@ -25,7 +25,7 @@ void main() async {
   Hive.init(appDir.path);
   await Hive.openBox('myThemeBox');
   await Firebase.initializeApp();
-SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
       overlays: [SystemUiOverlay.top]);
   SystemChrome.setPreferredOrientations(
     [
