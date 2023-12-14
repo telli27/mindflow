@@ -25,7 +25,8 @@ void main() async {
   Hive.init(appDir.path);
   await Hive.openBox('myThemeBox');
   await Firebase.initializeApp();
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
+SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+      overlays: [SystemUiOverlay.top]);
   SystemChrome.setPreferredOrientations(
     [
       DeviceOrientation.portraitUp,
@@ -33,7 +34,6 @@ void main() async {
     ],
   );
   runApp(DevicePreview(
-    
     enabled: !kReleaseMode,
     builder: (context) => MyApp(),
   ));
@@ -60,7 +60,7 @@ class _MyAppState extends State<MyApp> {
         ],
         child: Consumer<ThemeProvider>(builder: ((context, value, child) {
           return MaterialApp(
-              useInheritedMediaQuery: true,
+            useInheritedMediaQuery: true,
             locale: DevicePreview.locale(context),
             builder: DevicePreview.appBuilder,
             debugShowCheckedModeBanner: false,
@@ -70,7 +70,7 @@ class _MyAppState extends State<MyApp> {
             darkTheme: ThemeModel().darkMode,
             title: "Mindflow",
             home: Splash(),
-        //    builder: EasyLoading.init(),
+            //    builder: EasyLoading.init(),
           );
         })));
   }
